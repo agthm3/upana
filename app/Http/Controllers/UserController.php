@@ -24,6 +24,16 @@ class UserController extends Controller
         $user->save();
         return $user;
     }
+
+    public function login(Request $request){
+        $user = User::where('email', $request->email)->first();
+
+        if(!$user || !Hash::check($request->password, $user->password)){
+            return ["Error" => "Maaf, password atau email kamu salah!"];
+        }
+        
+        return $user;
+    }
     
     public function index()
     {
